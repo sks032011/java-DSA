@@ -1,0 +1,157 @@
+TO GET DAY FROM DATE 
+ Calendar c=Calendar.getInstance();
+
+    c.set(year,month-1,day);
+
+        // month starts from 0  
+   return c.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.US).toUpperCase();
+
+==========>
+
+Certainly! Here's a brief explanation of the code snippet you provided:
+
+Calendar.getInstance(): This gets an instance of the Calendar class representing the current date and time.
+
+c.set(year, month - 1, day): This sets the year, month, and day of the Calendar object (c) to the specified values. Note that the month parameter is zero-based, so you need to subtract 1 from the month value provided.
+
+c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US): This retrieves the display name of the day of the week corresponding to the date set in the Calendar object (c). It uses Calendar.DAY_OF_WEEK to specify that we want the day of the week, Calendar.LONG to specify that we want the full name (e.g., "Monday" instead of "Mon"), and Locale.US to specify the locale (language and country) for which to retrieve the display name.
+
+.toUpperCase(): This converts the name of the day to uppercase letters.
+
+Overall, this code snippet sets a specific date using Calendar, retrieves the name of the corresponding day of the week, and converts it to uppercase. It achieves a similar result to the earlier code using LocalDate, but with the Calendar class, which was used in older versions of Java before the introduction of the java.time package.
+
+=================================================================================
+
+import java.util.*;
+import java.text.*;
+
+public class Solution {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double payment = scanner.nextDouble();
+        scanner.close();
+String us=NumberFormat.getCurrencyInstance(Locale.US).format(payment); 
+
+String india=NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(payment);
+
+ String china=NumberFormat.getCurrencyInstance(Locale.CHINA).format(payment);
+
+ String france=NumberFormat.getCurrencyInstance(Locale.FRANCE).format(payment);
+
+ 
+        
+        System.out.println("US: " + us);
+        System.out.println("India: " + india);
+        System.out.println("China: " + china);
+        System.out.println("France: " + france);
+    }
+}
+12324.134
+Sample Output
+
+US: $12,324.13
+India: Rs.12,324.13
+China: ￥12,324.13
+France: 12 324,13 €
+==================================================================
+
+https://chat.openai.com/share/34958f96-93fa-4af3-ac66-7274849a8816
+
+===================================================================
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        
+          try{
+            String n = bufferedReader.readLine();
+
+            bufferedReader.close();
+            BigInteger number = new BigInteger(n);
+            if(number.isProbablePrime(1)){
+                System.out.println("prime");
+            }else{
+                System.out.println("not prime");
+            }                            
+        }catch(IOException e){
+            System.out.println("Could not validate input");
+        }
+}
+
+    }
+
+explain
+ChatGPT
+This Java program checks whether a given input number is prime or not. Let's break down the code:
+
+The import statements at the beginning are importing various classes from the Java standard library. These classes are used for handling input/output, mathematical operations, security, text formatting, and concurrency.
+The Solution class is defined as the main class of the program.
+Inside the Solution class, the main method is defined. This is the entry point of the program.
+The main method starts by creating a BufferedReader object named bufferedReader, which reads from the standard input (System.in).
+Inside a try-catch block, the program attempts to read a line of input from the user using bufferedReader.readLine() and assigns it to the variable n.
+The BufferedReader is then closed to release system resources.
+The input string n is converted to a BigInteger object named number. BigInteger is used here because it allows handling of very large integer values, which is essential for checking primality of large numbers.
+The program then uses the isProbablePrime method of the BigInteger class to check if the input number is probably prime. The parameter 1 passed to isProbablePrime indicates that a single iteration of the Miller-Rabin primality test should be performed. If the method returns true, the program prints "prime"; otherwise, it prints "not prime".
+If any IOException occurs during the reading of input, the catch block catches the exception and prints "Could not validate input".
+Overall, this program reads a number from the user, converts it to a BigInteger, and then checks whether it's prime or not using the isProbablePrime method. It handles potential input/output errors gracefully with the try-catch block.
+
+User
+why parameter 1 is passed
+ChatGPT
+In Java's BigInteger class, the isProbablePrime method is used to test if a BigInteger is probably prime. It takes an int parameter called certainty, which represents the level of certainty that the number is prime.
+
+The isProbablePrime(int certainty) method uses the Miller-Rabin primality test algorithm to determine whether the BigInteger is prime or not. The parameter certainty is used to control the accuracy of the test.
+
+When you pass the value 1 as the certainty parameter, you are requesting a low level of certainty. In other words, the method performs a single iteration of the Miller-Rabin test. This means that it's fast but may occasionally return a false positive (indicating a number is prime when it's actually composite).
+
+Using a low level of certainty can be suitable for many applications where speed is more important than absolute certainty, or when you're dealing with large numbers and a single iteration already provides a very high probability of correctness.
+
+If you need higher certainty, you can pass a larger value for the certainty parameter, but it will increase the time taken for the primality test to complete.
+
+
+===========================================================================
+In this challenge, we use regular expressions (RegEx) to remove instances of words that are repeated more than once, but retain the first occurrence of any case-insensitive repeated word. For example, the words love and to are repeated in the sentence I love Love to To tO code. Can you complete the code in the editor so it will turn I love Love to To tO code into I love to code?
+
+To solve this challenge, complete the following three lines:
+
+Write a RegEx that will match any repeated word.
+Complete the second compile argument so that the compiled RegEx is case-insensitive.
+Write the two necessary arguments for replaceAll such that each repeated word is replaced with the very first instance the word found in the sentence. It must be the exact first occurrence of the word, as the expected output is case-sensitive.
+
+
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class DuplicateWords {
+
+    public static void main(String[] args) {
+
+        String regex = "(?i)(\\b\\w+\\b)(\\b\\s+\\1\\b)+";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+
+        Scanner in = new Scanner(System.in);
+        int numSentences = Integer.parseInt(in.nextLine());
+        
+        while (numSentences-- > 0) {
+            String input = in.nextLine();
+            
+            Matcher m = p.matcher(input);
+            
+            // Check for subsequences of input that match the compiled pattern
+            while (m.find()) {
+                input = input.replaceAll(regex, "$1");
+            }
+            
+            // Prints the modified sentence.
+            System.out.println(input);
+        }
+        
+        in.close();
+    }
+}
+
+
+https://chat.openai.com/share/fd1b8d25-1d36-4f6e-9028-db0e9dc32362
