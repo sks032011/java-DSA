@@ -1,4 +1,5 @@
-//CEIL+FLOOR
+
+// CEIL+FLOOR
 
 // //{ Driver Code Starts
 // //Initial Template for Java
@@ -184,3 +185,131 @@
 //     }
 // }
 // --------------------------------------------------------------------
+// 33 Search in Rotated Sorted Array I
+// class BS {
+//     public int search(int[] a, int target) {
+//         int n=a.length;
+//         int low=0;int high=n-1;
+//         while(low<=high){
+//             int mid=(low+high)/2;
+//             if(a[mid]==target) return mid;
+
+//             // Left half sorted
+//             if(a[low]<=a[mid]){
+//                 if(a[low]<=target && target<=a[mid] ){
+//                     high=mid-1;
+                    
+//                 }
+//                 else low=mid+1;
+//             }
+//             else if(a[mid]<=target && a[high]>=target){
+//                 low=mid+1;
+              
+//             }
+//               else high=mid-1;
+//         }
+//         return -1;
+//     }
+// }
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// WITH DUPLICATES 
+// class Solution {
+//     public boolean search(int[] a, int target) {
+//         int n=a.length;
+//         int low=0;int high=n-1;
+//         while(low<=high){
+//             int mid=(low+high)/2;
+//             if(a[mid]==target){
+//                 return true;
+//             }
+//             if(a[low]==a[mid] && a[mid]==a[high]){
+//                 low+=1;high-=1;
+//                 continue;
+//             }
+//             //left check
+//             if(a[low]<=a[mid]){
+//                 if(a[low]<=target && target<=a[mid] ){
+//                     high=mid-1;
+                    
+//                 }
+//                 else low=mid+1;
+//             }
+//             else if(a[mid]<=target && a[high]>=target){
+//                 low=mid+1;
+              
+//             }
+//               else high=mid-1;
+//         }
+//     return false;
+//     }
+// }
+// -------------------------------------------------------------
+// 153. Find Minimum in Rotated Sorted Array
+
+// class BS {
+//     public int findMin(int[] a) {
+//         int n=a.length;
+//         int l=0;int h=n-1;
+//         int ans=Integer.MAX_VALUE;
+//         while(l<=h){
+//             int mid=(l+h)/2;
+//             if(a[l]<=a[mid]){
+//                 ans=Math.min(ans,a[l]);
+//                 l=mid+1;
+//             }
+//             else{
+//                 ans=Math.min(ans,a[mid]);
+//                 h=mid-1;
+//             }
+//         }
+//         return ans;
+//     }
+// }
+// --------------------------------------------------------------------------------
+// 540. Single Element in a Sorted Array
+
+// class BS {
+//     public int singleNonDuplicate(int[] a) {
+//         int n=a.length;
+//         if(n==1)return a[0];
+//         //trim
+//         if(a[0]!=a[1])return a[0];
+//         if(a[n-1]!=a[n-2])return a[n-1];
+//         int l=1;int h=n-2;
+//         while(l<=h){
+//             int mid=(l+h)/2;
+//             if(a[mid-1]!=a[mid] && a[mid]!=a[mid+1]) return a[mid];
+//             //eliminate halves
+//             if((mid%2==1 && a[mid-1]==a[mid])||(mid%2==0 && a[mid]==a[mid+1])){
+//                 l=mid+1;
+//             }
+//             //we r on right
+//             else{
+//                 h=mid-1;
+//             }
+
+//         }
+//         return -1;
+//     }
+// }
+
+// ---------------------------------------------------------------------------
+// 162. Find Peak Element
+
+// class BS {
+//     public int findPeakElement(int[] a) {
+//         int n=a.length;
+//         if (n==1) return 0;
+//         if(a[0]>a[1])return 0;
+//         if(a[n-1]>a[n-2])return n-1;
+//         int l=1;int h=n-2;
+//         while(l<=h){
+//             int mid=(l+h)/2;
+//             if(a[mid]>a[mid-1] && a[mid]>a[mid+1]) return mid;
+//             else if(a[mid]>a[mid-1]) l=mid+1;
+//             else h=mid-1;
+//         }
+//         return -1;
+
+//     }
+// }
