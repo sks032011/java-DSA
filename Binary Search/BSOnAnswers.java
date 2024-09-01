@@ -253,3 +253,151 @@
 //         return subarrays; //return student
 //     }
 // }
+// ---------------------------------------------------------
+
+// 4. Median of Two Sorted Arrays
+// BETTER 0(N1+N2)    100P ON LC THOUGH 
+
+// class Solution {
+//     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+//         int n1=nums1.length;int n2=nums2.length;
+//         int n=n1+n2;
+//         int idx2=n/2;int idx1=idx2-1;
+//         int cnt=0;
+//         int idx1el=-1;int idx2el=-1;
+//         int i=0;int j=0;
+//         while(i<n1 && j<n2){
+//         if(nums1[i]<nums2[j]){
+//         if(cnt==idx1) idx1el=nums1[i];
+//         if(cnt==idx2) idx2el=nums1[i]; 
+//        cnt++;i++;}
+//        else {
+//                 if (cnt == idx1) idx1el = nums2[j];
+//                 if (cnt == idx2) idx2el = nums2[j];
+//                 cnt++;
+//                 j++;
+//             }
+            
+//             }
+//              while (i < n1) {
+//             if (cnt == idx1) idx1el = nums1[i];
+//             if (cnt == idx2) idx2el = nums1[i];
+//             cnt++;
+//             i++;
+//         }
+//         while (j < n2) {
+//             if (cnt == idx1) idx1el = nums2[j];
+//             if (cnt == idx2) idx2el = nums2[j];
+//             cnt++;
+//             j++;
+//         }
+
+//         //Find the median:
+//         if (n % 2 == 1) {
+//             return (double)idx2el;
+//         }
+
+//         return (double)((double)(idx1el + idx2el)) / 2.0;
+//     }
+// }
+// ----------------------------------------------------------------------
+
+// IMPORTANT 
+// OPTIMAL 
+// class Solution {
+//     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+//         int n1=nums1.length;int n2=nums2.length;
+//         // i want arr1 to be smaller 
+//         if(n1>n2) return findMedianSortedArrays( nums2, nums1);
+//         int left=(n1+n2+1)/2;
+//         int low=0;int high=n1;
+//         int n=n1+n2;
+//         while(low<=high){
+//             int mid1=(low+high)/2;
+//             int mid2=left-mid1;
+//             int l1=Integer.MIN_VALUE;int l2=Integer.MIN_VALUE;
+//         int r1=Integer.MAX_VALUE;int r2=Integer.MAX_VALUE;
+//               if(mid1-1>=0)   l1=nums1[mid1-1];
+//               if(mid2-1>=0)   l2=nums2[mid2-1];
+//             if(mid1<n1) r1=nums1[mid1];
+//             if(mid2<n2) r2=nums2[mid2];
+//             if(l1<=r2&&l2<=r1){
+//                 if(n%2==1) {return (Math.max(l1,l2));}
+//             return ((double)((Math.max(l1,l2)+Math.min(r1,r2))))/2.0;
+               
+//             }
+//            else if(l1>r2)high=mid1-1;
+//             else low=mid1+1;
+
+
+        
+//         }
+//         return 0;
+
+
+//     }
+// }
+// ------------------------------------------------------
+
+
+// K-th element of two Arrays
+
+
+
+// // } Driver Code Ends
+// class Solution{
+//     public:
+//     int kthElement(int arr1[], int arr2[], int m, int n, int k)
+//     {
+//         if (m>n) return kthElement( arr2, arr1,  n,  m,  k);
+//         int left =k;
+//         int high=min(k,m);int low=max(0,k-n);
+//         while(low<=high){
+//             int mid1=(low+high)/2;
+//             int mid2=left-mid1;
+//             int l1 = INT_MIN, l2 = INT_MIN;
+//         int r1 = INT_MAX, r2 = INT_MAX;
+//              if (mid1 < m) r1 = arr1[mid1];
+//         if (mid2 < n) r2 = arr2[mid2];
+//         if (mid1 - 1 >= 0) l1 = arr1[mid1 - 1];
+//         if (mid2 - 1 >= 0) l2 = arr2[mid2 - 1];
+//         if(l1<=r2 && l2<=r1){
+//             return max(l1,l2);
+//         }
+//         else if (l1 > r2) high = mid1 - 1;
+//         else low = mid1 + 1;
+    
+//         }
+            
+//     }
+// };
+
+// ----------------------------------------
+
+Minimize Max Distance to Gas StatioN
+BETTER,,,,,,,,,,tle
+class Solution {
+  public:
+    double findSmallestMaxDist(vector<int> &arr, int k) {
+        // Code here
+        int n=arr.size();
+        vector<int>howmany(n-1,0);
+        priority_queue<pair<long double,int>>pq;
+        
+        for(int i=0;i<n-1;i++){
+            pq.push({arr[i+1]-arr[i],i});
+            
+        }
+        for(int i=1;i<=k;i++){
+            
+            auto tp=pq.top();
+            pq.pop();
+            int secidx=tp.second;
+            howmany[secidx]++;
+        long    double diff=arr[secidx+1]-arr[secidx];
+            long double seclen=diff/(long double)(howmany[secidx]+1);
+            pq.push({seclen,secidx});
+        }
+        return pq.top().first;
+    }
+};
